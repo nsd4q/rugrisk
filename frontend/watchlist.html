@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RugRisk</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">RugRisk</div>
+    <nav>
+      <a href="index.html">Screener</a>
+      <a href="watchlist.html" class="active">Watchlist</a>
+      <a href="scan.html">Risk</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="filters">
+      <h2 class="pagetitle">Your watchlist</h2>
+      <p class="hint">
+        Starred tokens are kept until you remove them (other tokens are deleted after about 8 days) and their prices are
+        refreshed continuously. Click the star to remove a token. Stars are stored in your own Supabase project.
+      </p>
+      <div class="bar">
+        <span id="status">Loading…</span>
+        <span class="spacer"></span>
+        <label class="inline"><input type="checkbox" id="auto" checked> Auto-refresh (30s)</label>
+        <button id="refresh" class="btn">Refresh</button>
+      </div>
+    </section>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="starcell" title="Watchlist">★</th><th>Token</th><th>Age</th><th class="r">Price</th>
+            <th class="r">5m</th><th class="r">1h</th><th class="r">24h</th>
+            <th class="r">Liquidity</th><th class="r">Vol 1h</th>
+            <th class="r">Buys/Sells</th><th class="r">MCap</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <p class="disclaimer">
+      Data is informational only and may be delayed or incomplete. Not financial advice.
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/watchlist.js"></script>
+</body>
+</html>

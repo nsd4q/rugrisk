@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RugRisk</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">RugRisk</div>
+    <nav>
+      <a href="index.html">Screener</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="scan.html" class="active">Risk</a>
+    </nav>
+  </header>
+
+  <main class="narrow">
+    <form id="scan-form" class="scan-form" autocomplete="off">
+      <input id="addr" type="text" spellcheck="false" placeholder="Paste a Solana token address">
+      <button class="btn" type="submit">Look up</button>
+    </form>
+
+    <div id="msg" class="msg">Paste any Solana token address to get a risk report. Tokens the screener already scored load instantly; anything else is scanned on demand.</div>
+
+    <div id="actions" class="actions" hidden>
+      <button id="scan-btn" class="btn" type="button">Scan now</button>
+      <span id="note" class="muted"></span>
+    </div>
+
+    <div id="result" hidden>
+      <section class="card summary">
+        <div class="info">
+          <h2 id="tok-title"></h2>
+          <p class="sub" id="tok-addr"></p>
+          <p class="sub" id="tok-meta"></p>
+          <div class="links" id="tok-links"></div>
+          <div class="watch-row">
+            <button id="watch-btn" class="chip" type="button">☆ Add to watchlist</button>
+            <span id="watch-msg" class="muted"></span>
+          </div>
+        </div>
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 120 72" class="gauge" role="img" aria-label="Risk score">
+            <path class="gauge-bg" d="M10 62 A50 50 0 0 1 110 62"></path>
+            <path id="gauge-arc" class="gauge-arc" d="M10 62 A50 50 0 0 1 110 62"
+                  stroke-dasharray="157.08" stroke-dashoffset="157.08"></path>
+            <text id="gauge-score" class="gauge-num" x="60" y="54" text-anchor="middle">0</text>
+            <text class="gauge-of" x="60" y="68" text-anchor="middle">of 100 risk</text>
+          </svg>
+          <div id="gauge-level" class="gauge-level"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Checks</h3>
+        <ul id="checks" class="checks"></ul>
+        <p id="coverage" class="coverage"></p>
+      </section>
+
+      <section class="card" id="holders-card" hidden>
+        <h3>Top holders</h3>
+        <div id="holders" class="holders"></div>
+      </section>
+
+      <section class="card history" id="history" hidden></section>
+    </div>
+
+    <p class="disclaimer">
+      Risk indicators only: not financial advice and not a guarantee of safety. A low score can still
+      rug. Checks marked "?" could not be verified and add no points, so they can make a token look safer than it is.
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/scan.js"></script>
+</body>
+</html>

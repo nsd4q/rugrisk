@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RugRisk</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">RugRisk</div>
+    <nav>
+      <a href="index.html" class="active">Screener</a>
+      <a href="watchlist.html">Watchlist</a>
+      <a href="scan.html">Risk</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="filters">
+      <div class="presets">
+        <button class="chip" data-preset='{"age":"","liq":"","vol":"","buy":"","mcapMin":"","mcapMax":"","sort":"new"}'>Reset</button>
+        <button class="chip" data-preset='{"age":"","liq":10000,"vol":"","buy":"","mcapMin":"","mcapMax":"","sort":"new"}'>Liquid $10k+</button>
+        <button class="chip" data-preset='{"age":"","liq":5000,"vol":5000,"buy":55,"mcapMin":"","mcapMax":"","sort":"vol"}'>Volume surge</button>
+        <button class="chip" data-preset='{"age":1440,"liq":5000,"vol":"","buy":"","mcapMin":"","mcapMax":"","sort":"vol"}'>Survived 24h+</button>
+        <button class="chip" data-preset='{"age":"","liq":5000,"vol":"","buy":"","mcapMin":"","mcapMax":1000000,"sort":"vol"}'>Under $1M mcap</button>
+      </div>
+
+      <div class="grid">
+        <label>Min age
+          <select id="f-age">
+            <option value="">Any</option>
+            <option value="5">5 min</option>
+            <option value="15">15 min</option>
+            <option value="60">1 hour</option>
+            <option value="360">6 hours</option>
+            <option value="1440">24 hours</option>
+            <option value="10080">1 week</option>
+          </select>
+        </label>
+        <label>Min market cap ($)
+          <input id="f-mcap-min" type="number" min="0" step="10000" placeholder="e.g. 100000">
+        </label>
+        <label>Max market cap ($)
+          <input id="f-mcap-max" type="number" min="0" step="10000" placeholder="e.g. 5000000">
+        </label>
+        <label>Min liquidity ($)
+          <input id="f-liq" type="number" min="0" step="1000" placeholder="e.g. 10000">
+        </label>
+        <label>Min 1h volume ($)
+          <input id="f-vol" type="number" min="0" step="1000" placeholder="e.g. 5000">
+        </label>
+        <label>Min buy % (1h)
+          <input id="f-buy" type="number" min="0" max="100" step="5" placeholder="e.g. 55">
+        </label>
+        <label>Sort by
+          <select id="f-sort">
+            <option value="new">Newest</option>
+            <option value="vol">1h volume</option>
+            <option value="liq">Liquidity</option>
+            <option value="mcap">Market cap</option>
+            <option value="chg">1h change</option>
+          </select>
+        </label>
+      </div>
+      <p class="hint">
+        <strong>Min age</strong> shows tokens at least that old. RugRisk keeps tokens for about 8 days
+        (starred tokens are kept until you remove them), so the 24 hour and 1 week options list tokens it has
+        been tracking since launch. Tokens without a market cap are hidden while a market cap filter is set.
+      </p>
+
+      <div class="bar">
+        <span id="status">Loading…</span>
+        <span class="spacer"></span>
+        <label class="inline"><input type="checkbox" id="auto" checked> Auto-refresh (30s)</label>
+        <button id="refresh" class="btn">Refresh</button>
+      </div>
+    </section>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th class="starcell" title="Watchlist">★</th><th>Token</th><th>Age</th><th class="r">Price</th>
+            <th class="r">5m</th><th class="r">1h</th><th class="r">24h</th>
+            <th class="r">Liquidity</th><th class="r">Vol 1h</th>
+            <th class="r">Buys/Sells</th><th class="r">MCap</th><th></th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+
+    <p class="disclaimer">
+      Data is informational only and may be delayed or incomplete. Use the <strong>Scan</strong> link on a row for a
+      risk report. Nothing here is financial advice. Always do your own research.
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script type="module" src="js/screener.js"></script>
+</body>
+</html>
